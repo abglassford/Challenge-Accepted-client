@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import FacebookLogin from 'react-facebook-login';
 import { Link } from 'react-router';
-import './Nav.css'
+import '../css/Nav.css'
 
 const responseFacebook = (response) => {
   console.log(response);
