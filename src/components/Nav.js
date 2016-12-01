@@ -9,11 +9,11 @@ class Nav extends Component {
     super()
     this.state = {
       page: 'Splash',
-      count: 0
+      count: 1
     }
   }
   counter () {
-    this.setState({count: this.state.count += 1})
+    this.setState({count: this.state.count + 1})
   }
 
   render () {
@@ -26,10 +26,11 @@ class Nav extends Component {
     return (
       <div>
         <nav>
-          <div className="nav-wrapper">
+          <div className="nav-wrapper blue">
             <Link to="/" className="brand-logo">Challenge Accepted</Link>
             <ul id="nav-mobile" className="right hide-on-med-and-down">
               <li><a href='#' onClick={this.counter.bind(this)}>{message}</a></li>
+              <li><a href='#' onClick={this.counter.bind(this)}>Logout</a></li>
             </ul>
           </div>
         </nav>

@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import FacebookLogin from 'react-facebook-login';
-import { browserHistory } from 'react-router';
-import axios from 'axios';
 
 class Challenge extends Component {
   render () {
