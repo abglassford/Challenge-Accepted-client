@@ -1,0 +1,23 @@
+.banner{
+  display: flex;
+  height: 400px;
+  margin-top: 10%;
+}
+.banner-content {
+  justify-content: center;
+  height: auto;
+  width: 70%;
+  margin: auto;
+}
+.banner-title{
+  font-size: 80px !important;
+  text-align: center;
+}
+.banner-button {
+  text-align: right;
+}
+@media (max-width: 500px) {
+  .banner-title{
+    font-size: 40px !important;
+  }
+}
