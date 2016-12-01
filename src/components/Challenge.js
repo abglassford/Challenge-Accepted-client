@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import NavBar from './NavBar';
 
-export default class SignUp extends Component {
+export default class Challenge extends Component {
   render () {
     return (
       <div>
-        <NavBar/>
-        <h1>This is the Signup page</h1>
+        <NavBar />
+        <h1>This is the challenge page</h1>
       </div>
     )
-
   }
 }
