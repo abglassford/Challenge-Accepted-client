@@ -5,12 +5,13 @@ import axios from 'axios';
 import '../css/Nav.css'
 
 const signUp = (response) => {
-  console.log(response);
   axios.post('http://localhost:8000/users/new', {
-    fb_token: response.accessToken,
+    id: response.id,
+    accessToken: response.accessToken,
     fb_obj: JSON.stringify(response)
   })
   .then((data) => {
+    console.log(data);
     browserHistory.push('/dashboard')
     console.log(data);
   })

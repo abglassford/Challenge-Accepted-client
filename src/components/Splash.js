@@ -20,14 +20,14 @@ const responseFacebook = (response) => {
 class Splash extends Component {
   render () {
     return (
-      <div className="splash jumbotron jumbotron-fluid text-center">
+      <div className="splash center">
         <h1>Splash!</h1>
         <FacebookLogin
         appId="1473688849309792"
         autoLoad={false}
         fields="name,email,picture"
         callback={responseFacebook}
-        cssClass="signUp btn btn-primary navbar-btn"/>
+        cssClass="signUp blue waves-effect waves-light btn"/>
       </div>
     );
   }

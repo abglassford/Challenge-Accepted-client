@@ -5,22 +5,37 @@ import '../css/Nav.css'
 
 
 class Nav extends Component {
+  constructor (props) {
+    super()
+    this.state = {
+      page: 'Splash',
+      count: 0
+    }
+  }
+  counter () {
+    this.setState({count: this.state.count += 1})
+  }
+
   render () {
+    let message
+    if(this.state.count > 5) {
+      message = 'everything is wrong'
+    } else {
+      message = 'everything is alright'
+    }
     return (
       <div>
-      <nav className="navbar navbar-default navbar-static-top">
-        <div className="container-fluid">
-          <div className="navbar-header">
-            <Link to="/" className="navbar-brand">Challenge Accepted</Link>
+        <nav>
+          <div className="nav-wrapper">
+            <Link to="/" className="brand-logo">Challenge Accepted</Link>
+            <ul id="nav-mobile" className="right hide-on-med-and-down">
+              <li><a href='#' onClick={this.counter.bind(this)}>{message}</a></li>
+            </ul>
           </div>
-          <div className="signDiv pull-right">
-
-          </div>
-        </div>
-      </nav>
-      <div>{this.props.children}</div>
-    </div>
-  );
+        </nav>
+        <div>{this.props.children}</div>
+      </div>
+    );
   }
 }
 
