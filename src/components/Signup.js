@@ -6,8 +6,7 @@ import '../css/Nav.css'
 
 const signUp = (response) => {
   console.log(response);
-  axios.post('https://rocky-thicket-61690.herokuapp.com/users/new', {
-    name: response.name,
+  axios.post('http://localhost:8000/users/new', {
     fb_token: response.accessToken,
     fb_obj: JSON.stringify(response)
   })

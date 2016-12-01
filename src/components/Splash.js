@@ -6,7 +6,7 @@ import '../css/Splash.css';
 
 const responseFacebook = (response) => {
   console.log(response);
-  axios.post('https://rocky-thicket-61690.herokuapp.com/users', response)
+  axios.post('http://localhost:8000/users', response)
   .then((data) => {
     browserHistory.push('/dashboard')
     console.log(data);
