@@ -4,6 +4,7 @@ import { Router, Route, browserHistory, IndexRoute, Redirect } from 'react-route
 import App from './components/App';
 import Home from './components/Home';
 import Dashboard from './components/Dashboard';
+import SignUp from './components/SignUp';
 import Default404 from './components/Default404';
 
 render (
@@ -12,6 +13,7 @@ render (
       <IndexRoute component={Home} />
       <Route path="/home" component={Home}/>
       <Route path="/dashboard" component={Dashboard}/>
+      <Route path="/signup" component={SignUp}/>
       <Route path="/404" component={Default404}/>
       <Redirect from="*" to="/404" />
     </Route>
