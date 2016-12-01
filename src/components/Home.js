@@ -8,7 +8,10 @@ export default class Home extends Component {
         <div className="banner-content">
           <h4>Accept the Challenge...</h4>
           <h1 className="banner-title">Challenge Accepted!</h1>
-          <p className="banner-button"><a className="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+          <div className="banner-buttons">
+            <p><a className="btn btn-primary btn-lg" href="#" role="button">Sign Up</a></p>
+            <p><a className="btn btn-primary btn-lg" href="#" role="button">Sign In</a></p>
+          </div>
         </div>
       </div>
     )

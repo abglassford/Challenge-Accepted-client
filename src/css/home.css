@@ -13,8 +13,13 @@
   font-size: 80px !important;
   text-align: center;
 }
-.banner-button {
+.banner-buttons {
+  display: flex;
+  justify-content: flex-end;
   text-align: right;
+}
+.banner-buttons p {
+  padding: 5px;
 }
 @media (max-width: 500px) {
   .banner-title{
