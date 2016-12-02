@@ -1,9 +1,0 @@
-.signup-form {
-  width: 50%;
-  margin: auto;
-}
-@media (max-width: 650px) {
-  .signup-form {
-    width: 80%;
-  }
-}

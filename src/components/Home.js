@@ -1,3 +1,4 @@
+/*global FB*/
 import React, { Component } from 'react';
 import { Link, browserHistory } from 'react-router';
 import FacebookLogin from 'react-facebook-login';
@@ -5,7 +6,10 @@ import '../css/home.css';
 
 const responseFacebook = (response) => {
   localStorage.setItem('fb_token', response.accessToken)
-  console.log(response);
+  console.log(localStorage.getItem('fb_token'));
+  FB.api('/me', {fields: 'first_name, last_name, picture, email'}, function(response) {
+    console.log(response);
+  });
   browserHistory.push('/dashboard')
 }
 
@@ -18,7 +22,7 @@ export default class Home extends Component {
       button = <FacebookLogin
         isDisabled={false}
         appId="1473688849309792"
-        fields="name,email,picture"
+        fields="first_name,last_name,email,picture"
         callback={responseFacebook}
         cssClass="btn btn-primary"/>
     }

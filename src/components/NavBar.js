@@ -1,6 +1,7 @@
 /*global FB*/
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+import '../css/navbar.css';
 
 export default class NavBar extends Component {
   logout () {
@@ -20,9 +21,17 @@ export default class NavBar extends Component {
           <Link className="navbar-brand" to="/home">
             <p>Challenge Accepted</p>
           </Link>
-          <ul className="nav navbar-nav">
-            <li><a onClick={this.logout.bind(this)} href="/home">this is a logout button</a></li>
-          </ul>
+        </div>
+        <div className="navbar-header pull-right">
+          <Link className="navbar-brand" to="/dashboard">
+            <p>Dashboard</p>
+          </Link>
+          <Link className="navbar-brand" to="/challenge">
+            <p>Challenge</p>
+          </Link>
+          <Link className="navbar-brand" onClick={this.logout.bind(this)} href="/home">
+            <p>Logout</p>
+          </Link>
         </div>
       </div>
     </nav>

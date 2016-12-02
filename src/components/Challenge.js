@@ -5,7 +5,7 @@ import Footer from './Footer';
 export default class Challenge extends Component {
   render () {
     return (
-      <div>
+      <div className="row"> 
         <NavBar />
         <h1>This is the challenge page</h1>
         <Footer />

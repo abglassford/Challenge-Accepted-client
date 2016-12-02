@@ -10,12 +10,12 @@ import Default404 from './components/Default404';
 render (
   <Router history={browserHistory}>
     <Route path="/" component={App}>
-      <IndexRedirect to="/home" />
-      <Route path="/home" component={Home}/>
-      <Route path="/dashboard" component={Dashboard}/>
+      <IndexRedirect to="home" />
+      <Route path="home" component={Home}/>
+      <Route path="dashboard" component={Dashboard}/>
       <Route path="/challenge" component={Challenge}/>
-      <Route path="/404" component={Default404}/>
-      <Redirect from="*" to="/404" />
+      <Route path="404" component={Default404}/>
+      <Redirect from="*" to="404" />
     </Route>
   </Router>,
   document.getElementById('root')
