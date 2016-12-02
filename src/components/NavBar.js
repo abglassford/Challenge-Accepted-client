@@ -1,7 +1,6 @@
 /*global FB*/
 import React, { Component } from 'react';
 import { Link } from 'react-router';
-import { browserHistory } from 'react-router';
 
 export default class NavBar extends Component {
   logout () {
@@ -11,8 +10,6 @@ export default class NavBar extends Component {
       if (response && response.status === 'connected') {
         FB.logout(function(res) {});
       }
-      location.reload(true)
-      browserHistory.push('/home');
     })
   }
   render () {
@@ -24,7 +21,7 @@ export default class NavBar extends Component {
             <p>Challenge Accepted</p>
           </Link>
           <ul className="nav navbar-nav">
-            <li><a onClick={this.logout.bind(this)}>this is a logout button</a></li>
+            <li><a onClick={this.logout.bind(this)} href="/home">this is a logout button</a></li>
           </ul>
         </div>
       </div>
