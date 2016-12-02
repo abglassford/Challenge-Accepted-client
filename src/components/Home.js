@@ -14,12 +14,26 @@ const responseFacebook = (response) => {
 }
 
 export default class Home extends Component {
+  logout () {
+    localStorage.removeItem('fb_token')
+    FB.getLoginStatus(function(response) {
+      console.log(response);
+      if (response && response.status === 'connected') {
+        FB.logout(function(res) {});
+      }
+    })
+  }
   render () {
-    let button
+    let status
     if(localStorage.getItem('fb_token')){
-      button = <Link to="/dashboard"><button className="btn btn-warning">Dashboard</button></Link>
+      status = (
+        <div>
+          <Link className="btn btn-warning dash" to="/dashboard">Dashboard</Link>
+          <Link className="btn btn-danger logout" onClick={this.logout.bind(this)} href="/home">Logout</Link>
+        </div>
+      )
     } else {
-      button = <FacebookLogin
+      status = <FacebookLogin
         isDisabled={false}
         appId="1473688849309792"
         fields="first_name,last_name,email,picture"
@@ -32,7 +46,7 @@ export default class Home extends Component {
           <h4>Accept the Challenge...</h4>
           <h1 className="banner-title">Challenge Accepted!</h1>
           <div className="banner-buttons">
-            {button}
+            {status}
           </div>
         </div>
       </div>

@@ -21,6 +21,9 @@
 .banner-buttons p {
   padding: 5px;
 }
+.dash, .logout {
+  margin: 5px;
+}
 @media (max-width: 500px) {
   .banner-title{
     font-size: 40px !important;
