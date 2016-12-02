@@ -6,7 +6,6 @@ import App from './components/App';
 import Home from './components/Home';
 import Dashboard from './components/Dashboard';
 import Challenge from './components/Challenge'
-import Login from './components/Login';
 import Default404 from './components/Default404';
 
 const auth = new AuthService('mlbGKlnsQ4HREGTkak1GI9oTnnWHCUgw', 'abglassford.auth0.com')
@@ -23,7 +22,6 @@ render (
       <IndexRedirect to="/home" />
       <Route path="/home" component={Home}/>
       <Route path="/dashboard" component={Dashboard} onEnter={requireAuth}/>
-      <Route path="/login" component={Login} />
       <Route path="/challenge" component={Challenge}/>
       <Route path="/404" component={Default404}/>
       <Redirect from="*" to="/404" />
