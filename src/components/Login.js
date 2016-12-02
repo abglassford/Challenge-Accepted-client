@@ -9,7 +9,6 @@ export class Login extends React.Component {
   }
   auth = new AuthService('mlbGKlnsQ4HREGTkak1GI9oTnnWHCUgw', 'abglassford.auth0.com')
   render() {
-    console.log(this.props);
     return <Button bsStyle="primary" onClick={this.auth.login.bind(this)}>Login</Button>
   }
 }

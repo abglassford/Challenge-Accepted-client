@@ -1,18 +1,24 @@
-import React from 'react';
-import {Link} from 'react-router';
+import React, { Component } from 'react';
+import {Link } from 'react-router';
+import Logout from './Logout';
 
-const NavBar = () => {
-  return (
+
+export default class NavBar extends Component {
+
+  render () {
+    return (
     <nav className="navbar navbar-default">
       <div className="container-fluid">
         <div className="navbar-header">
           <Link className="navbar-brand" to="/home">
             <p>Challenge Accepted</p>
           </Link>
+          <ul className="nav navbar-nav">
+            <li><Logout /></li>
+          </ul>
         </div>
       </div>
     </nav>
-  )
+    )
+  }
 }
-
-export default NavBar;
