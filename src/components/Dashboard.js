@@ -1,7 +1,7 @@
 /*global FB*/
 import React, { Component } from 'react';
 import NavBar from './NavBar';
-import Footer from './Footer';
+// import Footer from './Footer';
 import axios from 'axios';
 
 export default class Dashboard extends Component {
@@ -16,10 +16,12 @@ export default class Dashboard extends Component {
       FB.api('/me', {fields: 'first_name, last_name, picture, email'}, function(response) {
       })
     }
-    axios.get('http://localhost:8000/challenges')
+    axios.get('http://localhost:8000/challenge_templates')
     .then((res) => {
-      console.log('this is res', res);
       this.setState({challengeData: res.data.data})
+    })
+    .catch((err) => {
+      console.log(err);
     })
   }
 
@@ -28,10 +30,7 @@ export default class Dashboard extends Component {
       <div className="row">
         <NavBar />
         <div className="col-md-3 col-md-offset-1">
-          <h3>Your Challenges</h3>
-        </div>
-          <div className="col-md-7">
-            <h3>Available Challenges</h3>
+          <h3>Available Challenges</h3>
           <ul>
           {this.state.challengeData.map((challenge, i) => {
             return (
@@ -47,7 +46,10 @@ export default class Dashboard extends Component {
           })}
           </ul>
         </div>
-        <Footer />
+          <div className="col-md-7">
+            <h3>Your Challenges</h3>
+        </div>
+        {/* <Footer /> */}
       </div>
     )
   }

@@ -1,17 +1,34 @@
 /*global FB*/
 import React, { Component } from 'react';
+import axios from 'axios';
 import { Link, browserHistory } from 'react-router';
 import FacebookLogin from 'react-facebook-login';
 import '../css/home.css';
 
 const responseFacebook = (response) => {
-  localStorage.setItem('fb_token', response.accessToken)
-  console.log(localStorage.getItem('fb_token'));
-  FB.api('/me', {fields: 'first_name, last_name, picture, email'}, function(response) {
-    console.log(response);
-  });
-  browserHistory.push('/dashboard')
+  axios.get(`http://localhost:8000/users/${response.id}`)
+  .then(data => {
+    if (data.data.data.length) {
+      localStorage.setItem('fb_token', response.accessToken)
+      FB.api('/me', {fields: 'first_name, last_name, picture, email'}, function(response) {
+        console.log(response);
+      });
+      browserHistory.push('/dashboard')
+    } else {
+      axios.post(`http://localhost:8000/users/${response.id}`)
+      .then(data => console.log(data))
+      .catch(err => console.log(err))
+      localStorage.setItem('fb_token', response.accessToken)
+      FB.api('/me', {fields: 'first_name, last_name, picture, email'}, function(response) {
+        console.log(response);
+      });
+      browserHistory.push('/dashboard')
+    }
+  })
+  .catch(err => console.log(err));
 }
+
+
 
 export default class Home extends Component {
   logout () {
@@ -23,6 +40,9 @@ export default class Home extends Component {
       }
     })
   }
+
+
+
   render () {
     let status
     if(localStorage.getItem('fb_token')){
