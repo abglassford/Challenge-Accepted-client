@@ -23,7 +23,7 @@ export default class Dashboard extends Component {
     })
     axios.get('http://localhost:8000/challenge_templates')
     .then((res) => {
-      console.log(res);
+      console.log('chal_temp', res);
       this.setState({chal_temp_data: res.data.data})
     })
     .catch((err) => {
@@ -55,7 +55,6 @@ export default class Dashboard extends Component {
                   <h2>{chal_temp.name} {chal_temp.id}</h2>
                   <p>{chal_temp.description}</p>
                   <p>Points: {chal_temp.points}</p>
-                  <p>Progress: {chal_temp.progress}/10</p>
                 </div>
                 <a className="btn btn-success" onClick={(event) => this.accept(chal_temp)}>Accept Challenge!</a>
               </li>
