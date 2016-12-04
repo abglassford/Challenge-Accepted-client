@@ -9,7 +9,6 @@ export default class Challenge extends Component {
     this.state = {
       name: '',
       points: '',
-      progress: '',
       description: ''
     }
   }
@@ -19,10 +18,9 @@ export default class Challenge extends Component {
     let formObj = {
       name: this.refs.name.value,
       points: this.refs.points.value,
-      progress: this.refs.progress.value,
       description: this.refs.description.value
     }
-    axios.post('http://localhost:8000/challenges', formObj)
+    axios.post('http://localhost:8000/challenge_templates', formObj)
     .then(res => console.log(res))
   }
 
@@ -41,10 +39,6 @@ export default class Challenge extends Component {
           <div className="form-group">
             <label htmlFor="points">points</label>
             <input ref="points" className="form-control" id="points" type="integer"></input>
-          </div>
-          <div className="form-group">
-            <label htmlFor="progress">Progress</label>
-            <input ref="progress" className="form-control" id="progress" type="text"></input>
           </div>
           <div className="form-group">
             <label htmlFor="description">description</label>

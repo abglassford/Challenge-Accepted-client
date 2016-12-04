@@ -6,10 +6,12 @@ import FacebookLogin from 'react-facebook-login';
 import '../css/home.css';
 
 const responseFacebook = (response) => {
+  console.log(response);
   axios.get(`http://localhost:8000/users/${response.id}`)
   .then(data => {
     if (data.data.data.length) {
       localStorage.setItem('fb_token', response.accessToken)
+      localStorage.setItem('fb_id', response.id)
       FB.api('/me', {fields: 'first_name, last_name, picture, email'}, function(response) {
         console.log(response);
       });
