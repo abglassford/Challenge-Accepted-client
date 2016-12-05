@@ -8,12 +8,13 @@ import { getUserChallenges, getChallengeTemplates, postNewUserChallenge, stepCom
 
 export default class Dashboard extends Component {
   constructor(props, context) {
-    super ()
+    super (props)
     this.state = {
       challengeTemplates: [],
       fb_id: localStorage.getItem('fb_id'),
-      myChallenges: []
+      myChallenges: [],
     }
+    this.temp_display = this.state.challengeTemplates.map(temp => temp)
     this.accept = this.accept.bind(this)
     this.completeStep = this.completeStep.bind(this)
   }
@@ -27,15 +28,27 @@ export default class Dashboard extends Component {
       postNewUserChallenge(this, template)
       .then(() => {
         getUserChallenges(this)
+        getChallengeTemplates(this)
+        this.state.myChallenges.forEach((challenge, i)=> {
+          if (template.id === challenge.id) {
+            this.state.challengeTemplates.splice(i, 1)
+          }
+        })
       })
       .catch(err => console.log(err))
     } else {
       let same = false;
-      this.state.myChallenges.forEach(challenge => challenge.challenge_id === template.id ? same = true : same = false)
+      this.state.myChallenges.forEach(challenge => challenge.challenge_id === template.id ? same = true : console.log(''))
       if (!same) {
         postNewUserChallenge(this, template)
         .then(data => {
           getUserChallenges(this)
+          getChallengeTemplates(this)
+          this.state.myChallenges.forEach((challenge, i)=> {
+            if (template.id === challenge.id) {
+              this.state.challengeTemplates.splice(i, 1)
+            }
+          })
         })
       }
     }
@@ -80,21 +93,23 @@ export default class Dashboard extends Component {
           <div className="your col-md-7 col-sm-12">
             <h3>Your Challenges</h3>
             <ul>
-            {this.state.myChallenges.map((mine, i) => {
-              if (mine.progress === 10) {
+            {this.state.myChallenges.sort((a, b) => {
+              return a.id - b.id
+            })
+              .map((challenge, i) => {
+              if (challenge.progress === 10) {
                  progressButton = <a className="btn btn-success">Claim Reward!</a>
               } else {
-                progressButton = <a className="btn btn-success" onClick={(event) => this.completeStep(mine)}>Complete Step {mine.progress + 1}</a>
+                progressButton = <a className="btn btn-success" onClick={(event) => this.completeStep(challenge)}>Complete Step {challenge.progress + 1}</a>
               }
               return (
-                <li key={i} ref={mine.id}>
+                <li key={i} ref={challenge.id}>
                   <div>
-                    <h2>{mine.name} {mine.id}</h2>
-                    <p>{mine.description}</p>
-                    <p>Points: {mine.points} progress: {mine.progress}</p>
+                    <h2>{challenge.name} {challenge.id}</h2>
+                    <p>{challenge.description}</p>
+                    <p>Points: {challenge.points}</p>
                     <div className="progress">
-                      <div className="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style={{width: mine.progress * 10 + '%'}}>
-                        <span className="sr-only">60% Complete</span>
+                      <div className="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style={{width: challenge.progress * 10 + '%'}}>
                       </div>
                     </div>
                     <a className="btn btn-primary" onClick={this.share.bind(this)}>Share</a>

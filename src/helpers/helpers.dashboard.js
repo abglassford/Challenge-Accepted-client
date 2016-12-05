@@ -3,7 +3,6 @@ import axios from 'axios';
 function getUserChallenges (state) {
   axios.get(`http://localhost:8000/challenges/userChallenge/${state.state.fb_id}`)
   .then(response => {
-    console.log(response);
     state.setState({myChallenges: response.data.data})
   })
   .catch(err => console.log(err))
