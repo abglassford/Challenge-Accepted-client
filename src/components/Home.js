@@ -4,25 +4,24 @@ import axios from 'axios';
 import { Link, browserHistory } from 'react-router';
 import FacebookLogin from 'react-facebook-login';
 import '../css/home.css';
+import { setToken, removeToken } from '../helpers/helpers.home';
 
 const responseFacebook = (response) => {
   axios.get(`http://localhost:8000/users/${response.id}`)
   .then(data => {
     if (data.data.data.length) {
-      localStorage.setItem('fb_token', response.accessToken)
-      localStorage.setItem('fb_id', response.id)
-      FB.api('/me', {fields: 'first_name, last_name, picture, email'}, function(response) {
-        console.log(response);
-      });
+      setToken(response)
       browserHistory.push('/dashboard')
     } else {
-      axios.post(`http://localhost:8000/users/${response.id}`)
-      .then(data => console.log(data))
+      axios.post(`http://localhost:8000/users`, {
+        fb_id: response.id,
+        email: response.email
+      })
+      .then(data => {
+        setToken(response)
+        browserHistory.push('/dashboard')
+      })
       .catch(err => console.log(err))
-      localStorage.setItem('fb_token', response.accessToken)
-      FB.api('/me', {fields: 'first_name, last_name, picture, email'}, function(response) {
-      });
-      browserHistory.push('/dashboard')
     }
   })
   .catch(err => console.log(err));
@@ -30,8 +29,7 @@ const responseFacebook = (response) => {
 
 export default class Home extends Component {
   logout () {
-    localStorage.removeItem('fb_token')
-    localStorage.removeItem('fb_id');
+    removeToken()
     FB.getLoginStatus(function(response) {
       console.log(response);
       if (response && response.status === 'connected') {
