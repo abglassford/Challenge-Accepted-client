@@ -75,7 +75,7 @@ export default class Dashboard extends Component {
             return (
               <li key={i} ref={chal_temp.id}>
                 <div>
-                  <h2>{chal_temp.name} {chal_temp.id}</h2>
+                  <h2>{chal_temp.name}</h2>
                   <p>{chal_temp.description}</p>
                   <p>Points: {chal_temp.points}</p>
                 </div>
@@ -100,7 +100,7 @@ export default class Dashboard extends Component {
               return (
                 <li key={i} ref={challenge.id}>
                   <div>
-                    <h2>{challenge.name} {challenge.id}</h2>
+                    <h2>{challenge.name}</h2>
                     <p>{challenge.description}</p>
                     <p>Points: {challenge.points}</p>
                     <div className="progress">

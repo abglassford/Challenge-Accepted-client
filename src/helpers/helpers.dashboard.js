@@ -6,26 +6,25 @@ function getData (state) {
     let challenges = response.data.data;
     state.setState({myChallenges: challenges});
     axios.get('http://localhost:8000/challenge_templates')
-    .then((res) => {
-      let display = res.data.data
-      if (challenges.length) {
-        for (var i = 0; i < challenges.length; i++) {
-          for (var j = 0; j < display.length; j++) {
-            if (challenges[i].id === display[j].id) {
-              display.splice(j, 1)
-            }
-          }
-        }
-      }
-      state.setState({challengeTemplates: display})
-    })
-    .catch((err) => {
-      console.log(err);
-    })
+    .then(res => setData(res, challenges, state))
+    .catch(err => console.log(err));
   })
-  .catch(err => console.log(err))
+  .catch(err => console.log(err));
 }
 
+function setData (res, chals, state) {
+  let display = res.data.data;
+  if (chals.length) {
+    chals.forEach((challenge, i) => {
+      display.forEach((template, j) => {
+        if (chals[i].id === display[j].id) {
+          display.splice(j, 1);
+        }
+      })
+    })
+  }
+  state.setState({challengeTemplates: display})
+}
 
 function postNewUserChallenge (state, template) {
   return axios.post('http://localhost:8000/challenges', {
@@ -42,7 +41,7 @@ function stepComplete(challenge, state) {
     progress: challenge.progress + 1
   })
   .then(data => {
-    getData(state)
+  getData(state)
   })
 }
 

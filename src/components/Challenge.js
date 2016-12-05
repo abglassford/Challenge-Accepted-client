@@ -29,8 +29,10 @@ export default class Challenge extends Component {
     return (
       <div className="row">
         <NavBar />
-        <h1>This is the challenge page</h1>
-        <br/>
+        <div className="col-md-12 text-center">
+          <h1>Create a Challenge!</h1>
+          <br/>
+        </div>
         <div className="col-md-6 col-md-offset-3">
         <form onSubmit={this.submitForm.bind(this)}>
           <div className="form-group">
