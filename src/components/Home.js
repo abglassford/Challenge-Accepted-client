@@ -38,6 +38,7 @@ export default class Home extends Component {
     FB.getLoginStatus(function(response) {
       console.log(response);
       if (response && response.status === 'connected') {
+        console.log('eeey!');
         FB.logout(function(res) {});
       }
     })
