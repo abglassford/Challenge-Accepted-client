@@ -4,6 +4,7 @@ import NavBar from './NavBar';
 // import Footer from './Footer';
 import axios from 'axios';
 import '../css/dashboard.css';
+import { getUserChallenges, getChallengeTemplates, postNewUserChallenge } from '../helpers/helpers.dashboard';
 
 export default class Dashboard extends Component {
   constructor(props, context) {
@@ -16,50 +17,24 @@ export default class Dashboard extends Component {
     this.accept = this.accept.bind(this)
   }
   componentDidMount () {
-    axios.get(`http://localhost:8000/challenges/userChallenge/${localStorage.getItem('fb_id')}`)
-    .then(response => {
-      this.setState({myChallenges: response.data.data})
-    })
-    axios.get('http://localhost:8000/challenge_templates')
-    .then((res) => {
-      this.setState({challengeTemplates: res.data.data})
-    })
-    .catch((err) => {
-      console.log(err);
-    })
+    getUserChallenges(this)
+    getChallengeTemplates(this);
   }
 
-  accept (challengeTemplate) {
+  accept (template) {
     if (!this.state.myChallenges.length) {
-      axios.post('http://localhost:8000/challenges', {
-        user_id: this.state.fb_id,
-        challenge_id: challengeTemplate.id,
-        completed: false,
-        progress: 0.00
-      })
+      postNewUserChallenge(this, template)
       .then(() => {
-        axios.get(`http://localhost:8000/challenges/userChallenge/${localStorage.getItem('fb_id')}`)
-        .then(response => {
-          this.setState({myChallenges: response.data.data})
-        })
-        .catch(err => console.log(err))
+        getUserChallenges(this)
       })
       .catch(err => console.log(err))
     } else {
       let same = false;
-      this.state.myChallenges.forEach(challenge => challenge.challenge_id === challengeTemplate.id ? same = true : same = false)
+      this.state.myChallenges.forEach(challenge => challenge.challenge_id === template.id ? same = true : same = false)
       if (!same) {
-        axios.post('http://localhost:8000/challenges', {
-          user_id: this.state.fb_id,
-          challenge_id: challengeTemplate.id,
-          completed: false,
-          progress: 0.00
-        })
+        postNewUserChallenge(this, template)
         .then(data => {
-          axios.get(`http://localhost:8000/challenges/userChallenge/${localStorage.getItem('fb_id')}`)
-          .then(response => {
-            this.setState({myChallenges: response.data.data})
-          })
+          getUserChallenges(this)
         })
       }
     }
