@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 import NavBar from './NavBar';
 // import Footer from './Footer';
 import '../css/dashboard.css';
-import axios from 'axios';
-import { getUserChallenges, getChallengeTemplates, postNewUserChallenge, stepComplete } from '../helpers/helpers.dashboard';
+// import axios from 'axios';
+import { postNewUserChallenge, stepComplete, getData } from '../helpers/helpers.dashboard';
 
 export default class Dashboard extends Component {
   constructor(props, context) {
@@ -14,22 +14,19 @@ export default class Dashboard extends Component {
       fb_id: localStorage.getItem('fb_id'),
       myChallenges: [],
     }
-    this.temp_display = this.state.challengeTemplates.map(temp => temp)
     this.accept = this.accept.bind(this)
     this.completeStep = this.completeStep.bind(this)
   }
   componentDidMount () {
-    getUserChallenges(this)
-    getChallengeTemplates(this);
+    getData(this)
   }
 
   accept (template) {
     if (!this.state.myChallenges.length) {
       postNewUserChallenge(this, template)
       .then(() => {
-        getUserChallenges(this)
-        getChallengeTemplates(this)
-        this.state.myChallenges.forEach((challenge, i)=> {
+        getData(this)
+        this.state.myChallenges.forEach((challenge, i) => {
           if (template.id === challenge.id) {
             this.state.challengeTemplates.splice(i, 1)
           }
@@ -42,8 +39,7 @@ export default class Dashboard extends Component {
       if (!same) {
         postNewUserChallenge(this, template)
         .then(data => {
-          getUserChallenges(this)
-          getChallengeTemplates(this)
+          getData(this)
           this.state.myChallenges.forEach((challenge, i)=> {
             if (template.id === challenge.id) {
               this.state.challengeTemplates.splice(i, 1)
@@ -53,7 +49,6 @@ export default class Dashboard extends Component {
       }
     }
   }
-
   completeStep (challenge) {
     stepComplete(challenge, this)
   }
@@ -62,8 +57,8 @@ export default class Dashboard extends Component {
     FB.ui(
      {
       method: 'share',
-      href: 'https://developers.facebook.com/docs/'
-    }, function(response){
+      href: 'http://developers.facebook.com/docs/'
+    }, function(response) {
       console.log('this is the response', response);
     });
   }
@@ -98,7 +93,7 @@ export default class Dashboard extends Component {
             })
               .map((challenge, i) => {
               if (challenge.progress === 10) {
-                 progressButton = <a className="btn btn-success">Claim Reward!</a>
+                 progressButton = <a className="btn btn-success">Claim Reward! (when I make a function for it.)</a>
               } else {
                 progressButton = <a className="btn btn-success" onClick={(event) => this.completeStep(challenge)}>Complete Step {challenge.progress + 1}</a>
               }
@@ -112,7 +107,7 @@ export default class Dashboard extends Component {
                       <div className="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style={{width: challenge.progress * 10 + '%'}}>
                       </div>
                     </div>
-                    <a className="btn btn-primary" onClick={this.share.bind(this)}>Share</a>
+                    <a className="btn btn-primary" onClick={this.share.bind(this)}>Share (once I deploy the site)</a>
                     {progressButton}
                   </div>
                 </li>

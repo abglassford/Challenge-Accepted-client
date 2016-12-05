@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
 import axios from 'axios';
 import NavBar from './NavBar';
 import Footer from './Footer';
@@ -21,7 +22,7 @@ export default class Challenge extends Component {
       description: this.refs.description.value
     }
     axios.post('http://localhost:8000/challenge_templates', formObj)
-    .then(res => console.log(res))
+    .then(res => browserHistory.push('/dashboard'))
   }
 
   render () {
