@@ -4,7 +4,8 @@ import { Router, Route, browserHistory, IndexRedirect, Redirect } from 'react-ro
 import App from './components/App';
 import Home from './components/Home';
 import Dashboard from './components/Dashboard';
-import Challenge from './components/Challenge'
+import Challenge from './components/Challenge';
+import Profile from './components/Profile';
 import Default404 from './components/Default404';
 
 render (
@@ -14,6 +15,7 @@ render (
       <Route path="home" component={Home}/>
       <Route path="dashboard" component={Dashboard}/>
       <Route path="challenge" component={Challenge}/>
+      <Route path="profile" component={Profile}/>
       <Route path="404" component={Default404}/>
       <Redirect from="*" to="404" />
     </Route>

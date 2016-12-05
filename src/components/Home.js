@@ -6,7 +6,6 @@ import FacebookLogin from 'react-facebook-login';
 import '../css/home.css';
 
 const responseFacebook = (response) => {
-  console.log(response);
   axios.get(`http://localhost:8000/users/${response.id}`)
   .then(data => {
     if (data.data.data.length) {
@@ -22,7 +21,6 @@ const responseFacebook = (response) => {
       .catch(err => console.log(err))
       localStorage.setItem('fb_token', response.accessToken)
       FB.api('/me', {fields: 'first_name, last_name, picture, email'}, function(response) {
-        console.log(response);
       });
       browserHistory.push('/dashboard')
     }
@@ -30,11 +28,10 @@ const responseFacebook = (response) => {
   .catch(err => console.log(err));
 }
 
-
-
 export default class Home extends Component {
   logout () {
     localStorage.removeItem('fb_token')
+    localStorage.removeItem('fb_id');
     FB.getLoginStatus(function(response) {
       console.log(response);
       if (response && response.status === 'connected') {
@@ -43,8 +40,6 @@ export default class Home extends Component {
       }
     })
   }
-
-
 
   render () {
     let status

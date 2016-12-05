@@ -8,7 +8,6 @@ export default class NavBar extends Component {
     localStorage.removeItem('fb_token');
     localStorage.removeItem('fb_id');
     FB.getLoginStatus(function(response) {
-      console.log(response);
       if (response && response.status === 'connected') {
         FB.logout(function(res) {});
       }

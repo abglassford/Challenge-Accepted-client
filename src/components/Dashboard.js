@@ -9,7 +9,7 @@ export default class Dashboard extends Component {
   constructor(props, context) {
     super ()
     this.state = {
-      chal_temp_data: [],
+      challengeTemplates: [],
       fb_id: localStorage.getItem('fb_id'),
       myChallenges: []
     }
@@ -19,26 +19,60 @@ export default class Dashboard extends Component {
     axios.get(`http://localhost:8000/challenges/userChallenge/${localStorage.getItem('fb_id')}`)
     .then(response => {
       this.setState({myChallenges: response.data.data})
-      console.log('this is challenges', response.data.data)
     })
     axios.get('http://localhost:8000/challenge_templates')
     .then((res) => {
-      console.log('chal_temp', res);
-      this.setState({chal_temp_data: res.data.data})
+      this.setState({challengeTemplates: res.data.data})
     })
     .catch((err) => {
       console.log(err);
     })
   }
 
-  accept (chal_temp) {
-    axios.post('http://localhost:8000/challenges', {
-      user_id: this.state.fb_id,
-      challenge_id: chal_temp.id,
-      completed: false,
-      progress: 0.00
-    })
-    .then(data => console.log(data))
+  accept (challengeTemplate) {
+    if (!this.state.myChallenges.length) {
+      axios.post('http://localhost:8000/challenges', {
+        user_id: this.state.fb_id,
+        challenge_id: challengeTemplate.id,
+        completed: false,
+        progress: 0.00
+      })
+      .then(() => {
+        axios.get(`http://localhost:8000/challenges/userChallenge/${localStorage.getItem('fb_id')}`)
+        .then(response => {
+          this.setState({myChallenges: response.data.data})
+        })
+        .catch(err => console.log(err))
+      })
+      .catch(err => console.log(err))
+    } else {
+      let same = false;
+      this.state.myChallenges.forEach(challenge => challenge.challenge_id === challengeTemplate.id ? same = true : same = false)
+      if (!same) {
+        axios.post('http://localhost:8000/challenges', {
+          user_id: this.state.fb_id,
+          challenge_id: challengeTemplate.id,
+          completed: false,
+          progress: 0.00
+        })
+        .then(data => {
+          axios.get(`http://localhost:8000/challenges/userChallenge/${localStorage.getItem('fb_id')}`)
+          .then(response => {
+            this.setState({myChallenges: response.data.data})
+          })
+        })
+      }
+    }
+  }
+
+  share () {
+    FB.ui(
+     {
+      method: 'share',
+      href: 'https://developers.facebook.com/docs/'
+    }, function(response){
+      console.log('this is the response', response);
+    });
   }
 
   render () {
@@ -48,7 +82,7 @@ export default class Dashboard extends Component {
         <div className="avail col-md-3 col-md-offset-1 col-sm-12">
           <h3>Available Challenges</h3>
           <ul>
-          {this.state.chal_temp_data.map((chal_temp, i) => {
+          {this.state.challengeTemplates.map((chal_temp, i) => {
             return (
               <li key={i} ref={chal_temp.id}>
                 <div>
@@ -73,6 +107,7 @@ export default class Dashboard extends Component {
                     <p>{mine.description}</p>
                     <p>Points: {mine.points}</p>
                     <p>Progress: {mine.progress}/10</p>
+                    <a onClick={this.share.bind(this)}>Share</a>
                   </div>
                 </li>
               )
