@@ -2,9 +2,9 @@
 import React, { Component } from 'react';
 import NavBar from './NavBar';
 // import Footer from './Footer';
-import axios from 'axios';
 import '../css/dashboard.css';
-import { getUserChallenges, getChallengeTemplates, postNewUserChallenge } from '../helpers/helpers.dashboard';
+import axios from 'axios';
+import { getUserChallenges, getChallengeTemplates, postNewUserChallenge, stepComplete } from '../helpers/helpers.dashboard';
 
 export default class Dashboard extends Component {
   constructor(props, context) {
@@ -15,6 +15,7 @@ export default class Dashboard extends Component {
       myChallenges: []
     }
     this.accept = this.accept.bind(this)
+    this.completeStep = this.completeStep.bind(this)
   }
   componentDidMount () {
     getUserChallenges(this)
@@ -40,6 +41,10 @@ export default class Dashboard extends Component {
     }
   }
 
+  completeStep (challenge) {
+    stepComplete(challenge, this)
+  }
+
   share () {
     FB.ui(
      {
@@ -51,6 +56,7 @@ export default class Dashboard extends Component {
   }
 
   render () {
+    let progressButton
     return (
       <div className="row">
         <NavBar />
@@ -75,14 +81,24 @@ export default class Dashboard extends Component {
             <h3>Your Challenges</h3>
             <ul>
             {this.state.myChallenges.map((mine, i) => {
+              if (mine.progress === 10) {
+                 progressButton = <a className="btn btn-success">Claim Reward!</a>
+              } else {
+                progressButton = <a className="btn btn-success" onClick={(event) => this.completeStep(mine)}>Complete Step {mine.progress + 1}</a>
+              }
               return (
                 <li key={i} ref={mine.id}>
                   <div>
                     <h2>{mine.name} {mine.id}</h2>
                     <p>{mine.description}</p>
-                    <p>Points: {mine.points}</p>
-                    <p>Progress: {mine.progress}/10</p>
-                    <a onClick={this.share.bind(this)}>Share</a>
+                    <p>Points: {mine.points} progress: {mine.progress}</p>
+                    <div className="progress">
+                      <div className="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style={{width: mine.progress * 10 + '%'}}>
+                        <span className="sr-only">60% Complete</span>
+                      </div>
+                    </div>
+                    <a className="btn btn-primary" onClick={this.share.bind(this)}>Share</a>
+                    {progressButton}
                   </div>
                 </li>
               )

@@ -1,40 +1,20 @@
 /*global FB*/
 import React, { Component } from 'react';
-import axios from 'axios';
-import { Link, browserHistory } from 'react-router';
+import { Link } from 'react-router';
 import FacebookLogin from 'react-facebook-login';
+import { removeToken, checkUserExists } from '../helpers/helpers.home';
 import '../css/home.css';
-import { setToken, removeToken } from '../helpers/helpers.home';
 
 const responseFacebook = (response) => {
-  axios.get(`http://localhost:8000/users/${response.id}`)
-  .then(data => {
-    if (data.data.data.length) {
-      setToken(response)
-      browserHistory.push('/dashboard')
-    } else {
-      axios.post(`http://localhost:8000/users`, {
-        fb_id: response.id,
-        email: response.email
-      })
-      .then(data => {
-        setToken(response)
-        browserHistory.push('/dashboard')
-      })
-      .catch(err => console.log(err))
-    }
-  })
-  .catch(err => console.log(err));
+  checkUserExists(response)
 }
 
 export default class Home extends Component {
   logout () {
     removeToken()
     FB.getLoginStatus(function(response) {
-      console.log(response);
       if (response && response.status === 'connected') {
-        console.log('eeey!');
-        FB.logout(function(res) {});
+        FB.logout();
       }
     })
   }
