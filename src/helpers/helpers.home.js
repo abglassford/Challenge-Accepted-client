@@ -18,9 +18,10 @@ function checkUserExists (response) {
       setToken(response)
       browserHistory.push('/dashboard')
     } else {
+      console.log('not found');
       axios.post(`http://localhost:8000/users`, {
         fb_id: response.id,
-        email: response.email
+        email: response.email,
       })
       .then(data => {
         setToken(response)

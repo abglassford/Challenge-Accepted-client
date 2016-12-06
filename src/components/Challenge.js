@@ -36,15 +36,15 @@ export default class Challenge extends Component {
         <div className="col-md-6 col-md-offset-3">
         <form onSubmit={this.submitForm.bind(this)}>
           <div className="form-group">
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Challenge Name</label>
             <input ref="name" className="form-control" id="name" type="text"></input>
           </div>
           <div className="form-group">
-            <label htmlFor="points">points</label>
+            <label htmlFor="points">Points</label>
             <input ref="points" className="form-control" id="points" type="integer"></input>
           </div>
           <div className="form-group">
-            <label htmlFor="description">description</label>
+            <label htmlFor="description">Description</label>
             <textarea ref="description" className="form-control" id="description" type="text-area"></textarea>
           </div>
           <button>Submit</button>

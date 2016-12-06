@@ -1,9 +1,24 @@
 /*global FB*/
 import React, { Component } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router';
 import '../css/navbar.css';
 
 export default class NavBar extends Component {
+  constructor (props) {
+    super(props)
+    this.goToProfile = this.goToProfile.bind(this)
+  }
+
+  goToProfile (e) {
+    let query = this.refs.search.value;
+    e.preventDefault()
+    axios.get(`http://localhost:8000/users/${query}`)
+    .then((data) => {
+      console.log(data);
+    })
+  }
+
   logout () {
     localStorage.removeItem('fb_token');
     localStorage.removeItem('fb_id');
@@ -23,6 +38,12 @@ export default class NavBar extends Component {
           </Link>
         </div>
         <div className="navbar-header pull-right">
+          <form className="navbar-form navbar-left" role="search" onSubmit={(event) => this.goToProfile(event)}>
+            <div className="form-group">
+              <input ref="search" id="search"  type="text" className="form-control" placeholder="Search"/>
+            </div>
+            <button type="submit" className="btn btn-default">Submit</button>
+          </form>
           <Link className="navbar-brand" to="/dashboard">
             <p>Dashboard</p>
           </Link>
