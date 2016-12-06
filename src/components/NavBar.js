@@ -1,5 +1,6 @@
 /*global FB*/
 import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
 import axios from 'axios';
 import { Link } from 'react-router';
 import '../css/navbar.css';
@@ -8,16 +9,22 @@ export default class NavBar extends Component {
   constructor (props) {
     super(props)
     this.goToProfile = this.goToProfile.bind(this)
+    this.state = {
+      myProfile: `/profile/${localStorage.fb_id}`
+    }
   }
 
   goToProfile (e) {
-    let query = this.refs.search.value;
+    let name = this.refs.search.value;
     e.preventDefault()
-    axios.get(`http://localhost:8000/users/${query}`)
+    axios.get(`http://localhost:8000/profile/${name}`)
     .then((data) => {
-      console.log(data);
+      let searchList = data.data.data
+      let id = searchList[0].fb_id
+      browserHistory.push(`/profile/${id}`)
     })
   }
+
 
   logout () {
     localStorage.removeItem('fb_token');
@@ -40,10 +47,13 @@ export default class NavBar extends Component {
         <div className="navbar-header pull-right">
           <form className="navbar-form navbar-left" role="search" onSubmit={(event) => this.goToProfile(event)}>
             <div className="form-group">
-              <input ref="search" id="search"  type="text" className="form-control" placeholder="Search"/>
+              <input ref="search" id="search"  type="text" className="form-control" placeholder="Search User by Name"/>
             </div>
             <button type="submit" className="btn btn-default">Submit</button>
           </form>
+          <Link className="navbar-brand" to={this.state.myProfile}>
+            <p>Profile</p>
+          </Link>
           <Link className="navbar-brand" to="/dashboard">
             <p>Dashboard</p>
           </Link>

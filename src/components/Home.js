@@ -35,6 +35,7 @@ export default class Home extends Component {
         fields="first_name,last_name,email,picture"
         callback={responseFacebook}
         cssClass="btn btn-primary"/>
+
     }
     return (
       <div className="jumbotron banner">

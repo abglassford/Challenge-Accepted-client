@@ -21,8 +21,7 @@ render (
       <Route path="home" component={Home}/>
       <Route path="dashboard" component={Dashboard} onEnter={loggedIn}/>
       <Route path="challenge" component={Challenge} onEnter={loggedIn}/>
-      <Route path="profile/:name" component={Profile}/>
-
+      <Route path="profile/:id" component={Profile}/>
       <Route path="404" component={Default404}/>
       <Redirect from="*" to="404" />
     </Route>
