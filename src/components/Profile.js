@@ -10,7 +10,8 @@ export default class Profile extends Component {
       userData: [],
       userName: '',
       user: localStorage.fb_id,
-      searchedId: ''
+      searchedId: '',
+      totalPoints: 0
     }
     this.getProfile = this.getProfile.bind(this)
   }
@@ -19,7 +20,6 @@ export default class Profile extends Component {
     let user = this.state.user;
     axios.get(`https://rocky-thicket-61690.herokuapp.com/challenges/allUserData/${user}`)
     .then(res => {
-      console.log(res);
       let name = res.data.data[0].first_name.charAt(0).toUpperCase() + res.data.data[0].first_name.slice(1)
       this.setState({
         userData: res.data.data,
@@ -56,6 +56,9 @@ export default class Profile extends Component {
   }
 
   render() {
+    this.state.userData.forEach(challenge => {
+      // totalPoints += challenge.points
+    })
     let banner
     if(this.state.searchedId) {
       if (this.state.searchedId === this.state.user) {
@@ -67,6 +70,7 @@ export default class Profile extends Component {
        banner = <h1>Welcome {this.state.userName}!</h1>
     }
     return (
+
       <div className="row">
         <NavBar/>
         <div className="container">
@@ -100,7 +104,7 @@ export default class Profile extends Component {
                     return (
                       <li key={i}>
                         <div>
-                          <h2>{challenge.name}<span className="pull-right">{challenge.points} pts</span></h2>
+                          <h2>{challenge.name}</h2>
                           <p>{challenge.description}</p>
                           <div className="progress">
                             <div className="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style={{width: challenge.progress * 20 + '%'}}>
@@ -114,34 +118,25 @@ export default class Profile extends Component {
                 })}
               </ul>
             </div>
-            <div className="col-md-6">
+            <div className="col-md-4 col-md-offset-1">
               <h2>Completed Challenges</h2>
               <hr/>
               <table className='table'>
-                <thead>
-                  <tr>
-                    <th>Challenge Name</th>
-                    <th>Points</th>
-                  </tr>
-                </thead>
-                <tbody>
+                <ul>
                 {this.state.userData.map((challenge, i) => {
                   if (challenge.progress === 5) {
                     return (
-                      <tr key={i}>
-                        <td>
+                      <li key={i}>
+                        <div>
                           <h2>{challenge.name}</h2>
                           <p>{challenge.description}</p>
-                        </td>
-                        <td>
-                          <h2>{challenge.points}</h2>
-                        </td>
-                      </tr>
+                        </div>
+                      </li>
                     )
                   }
                   return null
                 })}
-                </tbody>
+              </ul>
               </table>
             </div>
 

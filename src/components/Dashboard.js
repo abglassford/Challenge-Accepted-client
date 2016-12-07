@@ -84,7 +84,6 @@ export default class Dashboard extends Component {
                 <div>
                   <h2>{chal_temp.name}</h2>
                   <p>{chal_temp.description}</p>
-                  <p>Points: {chal_temp.points}</p>
                   <p>Created By: {chal_temp.creator}</p>
                 </div>
                 <a className="btn btn-success" onClick={(event) => this.accept(chal_temp)}>Accept Challenge!</a>
@@ -114,7 +113,6 @@ export default class Dashboard extends Component {
                   <div>
                     <h2>{challenge.name}</h2>
                     <p>{challenge.description}</p>
-                    <p>Points: {challenge.points}</p>
                     {step}
                     <div className="progress">
                       <div className="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style={{width: challenge.progress * 20 + '%'}}>
