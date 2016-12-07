@@ -1,11 +1,11 @@
 import axios from 'axios';
 
 function getData (state) {
-  axios.get(`http://localhost:8000/challenges/userChallenge/${state.state.fb_id}`)
+  axios.get(`https://rocky-thicket-61690.herokuapp.com/challenges/userChallenge/${state.state.fb_id}`)
   .then(response => {
     let challenges = response.data.data;
     state.setState({myChallenges: challenges});
-    axios.get('http://localhost:8000/challenge_templates')
+    axios.get('https://rocky-thicket-61690.herokuapp.com/challenge_templates')
     .then(res => setData(res, challenges, state))
     .catch(err => console.log(err));
   })
@@ -27,7 +27,7 @@ function setData (res, chals, state) {
 }
 
 function postNewUserChallenge (state, template) {
-  return axios.post('http://localhost:8000/challenges', {
+  return axios.post('https://rocky-thicket-61690.herokuapp.com/challenges', {
     user_id: state.state.fb_id,
     challenge_id: template.id,
     completed: false,
@@ -35,7 +35,7 @@ function postNewUserChallenge (state, template) {
   })
 }
 function stepComplete(challenge, state) {
-  axios.put(`http://localhost:8000/challenges`, {
+  axios.put(`https://rocky-thicket-61690.herokuapp.com/challenges`, {
     user_id: state.state.fb_id,
     challenge_id: challenge.id,
     step1_complete: true,

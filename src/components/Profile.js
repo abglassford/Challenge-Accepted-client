@@ -17,8 +17,9 @@ export default class Profile extends Component {
 
   componentDidMount () {
     let user = this.state.user;
-    axios.get(`http://localhost:8000/challenges/allUserData/${user}`)
+    axios.get(`https://rocky-thicket-61690.herokuapp.com/challenges/allUserData/${user}`)
     .then(res => {
+      console.log(res);
       let name = res.data.data[0].first_name.charAt(0).toUpperCase() + res.data.data[0].first_name.slice(1)
       this.setState({
         userData: res.data.data,
@@ -29,10 +30,10 @@ export default class Profile extends Component {
 
   getProfile () {
     let name = this.refs.search.value.toLowerCase();
-    axios.get(`http://localhost:8000/profile/${name}`)
+    axios.get(`https://rocky-thicket-61690.herokuapp.com/profile/${name}`)
     .then((data) => {
       let userId = data.data.data[0].fb_id
-      axios.get(`http://localhost:8000/challenges/allUserData/${userId}`)
+      axios.get(`https://rocky-thicket-61690.herokuapp.com/challenges/allUserData/${userId}`)
       .then(res => {
         let userName = res.data.data[0].first_name.charAt(0).toUpperCase() + res.data.data[0].first_name.slice(1)
         this.setState({

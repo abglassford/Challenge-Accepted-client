@@ -28,7 +28,7 @@ export default class Challenge extends Component {
       step4: this.refs.step4.value,
       step5: this.refs.step5.value
     }
-    axios.post('http://localhost:8000/challenge_templates', formObj)
+    axios.post('https://rocky-thicket-61690.herokuapp.com/challenge_templates', formObj)
     .then(res => browserHistory.push('/dashboard'))
     .catch(err => console.log(err))
   }

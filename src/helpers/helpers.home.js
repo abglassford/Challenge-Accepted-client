@@ -14,13 +14,13 @@ function removeToken () {
 }
 
 function checkUserExists (response) {
-  axios.get(`http://localhost:8000/users/${response.id}`)
+  axios.get(`https://rocky-thicket-61690.herokuapp.com/users/${response.id}`)
   .then(data => {
     if (data.data.data.length) {
       setToken(response)
       browserHistory.push('/dashboard')
     } else {
-      axios.post(`http://localhost:8000/users`, {
+      axios.post(`https://rocky-thicket-61690.herokuapp.com/users`, {
         fb_id: response.id,
         first_name: response.first_name,
         last_name: response.last_name,
