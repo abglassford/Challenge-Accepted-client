@@ -39,7 +39,7 @@ export default class NavBar extends Component {
           <Link className="navbar-brand" to="/challenge">
             <p>Challenge</p>
           </Link>
-          <Link className="navbar-brand" onClick={this.logout.bind(this)} href="/home">
+          <Link className="navbar-brand" onClick={this.logout.bind(this)} to="/home">
             <p>Logout</p>
           </Link>
         </div>

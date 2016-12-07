@@ -62,7 +62,7 @@ export default class Dashboard extends Component {
     FB.ui(
      {
       method: 'share',
-      href: '127.0.0.1:8000'
+      href: 'https://challenge-accepted.surge.sh/'
     }, function(response) {
       console.log('this is the response', response);
     });
