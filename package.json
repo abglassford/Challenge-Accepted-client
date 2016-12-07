@@ -1,6 +1,6 @@
 {
   "name": "Challenge-Accepted-client",
-  "homepage": "http://challenge-accepted.sh",
+  "homepage": "http://challenge-accepted.sh/",
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
