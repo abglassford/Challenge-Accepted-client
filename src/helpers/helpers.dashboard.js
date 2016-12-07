@@ -38,6 +38,7 @@ function stepComplete(challenge, state) {
   axios.put(`http://localhost:8000/challenges`, {
     user_id: state.state.fb_id,
     challenge_id: challenge.id,
+    step1_complete: true,
     progress: challenge.progress + 1
   })
   .then(data => {

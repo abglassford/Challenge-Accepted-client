@@ -50,14 +50,19 @@ export default class Dashboard extends Component {
     }
   }
   completeStep (challenge) {
+    console.log(challenge);
     stepComplete(challenge, this)
+  }
+
+  completeChallenge (challenge) {
+    console.log(challenge);
   }
 
   share () {
     FB.ui(
      {
       method: 'share',
-      href: 'https://www.google.com'
+      href: '127.0.0.1:8000'
     }, function(response) {
       console.log('this is the response', response);
     });
@@ -65,6 +70,8 @@ export default class Dashboard extends Component {
 
   render () {
     let progressButton
+    let steps = []
+    let step
     return (
       <div className="row">
         <NavBar />
@@ -93,22 +100,27 @@ export default class Dashboard extends Component {
               return a.id - b.id
             })
               .map((challenge, i) => {
-              if (challenge.progress === 10) {
-                 progressButton = <a className="btn btn-success">Claim Reward! (when I make a function for it.)</a>
+                steps.push(challenge.step1, challenge.step2, challenge.step3, challenge.step4, challenge.step4)
+              if (challenge.progress === 5) {
+                step = <p>All Steps Completed!</p>
+                 progressButton = <a className="btn btn-success" onClick={(event) => this.completeChallenge(challenge)}>Complete Challenge!</a>
               } else {
+                step = <p>Step {challenge.progress}: {steps[challenge.progress]}</p>
                 progressButton = <a className="btn btn-success" onClick={(event) => this.completeStep(challenge)}>Complete Step {challenge.progress + 1}</a>
               }
               return (
+
                 <li key={i} ref={challenge.id}>
                   <div>
                     <h2>{challenge.name}</h2>
                     <p>{challenge.description}</p>
                     <p>Points: {challenge.points}</p>
+                    {step}
                     <div className="progress">
-                      <div className="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style={{width: challenge.progress * 10 + '%'}}>
+                      <div className="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style={{width: challenge.progress * 20 + '%'}}>
                       </div>
                     </div>
-                    <a className="btn btn-primary" onClick={this.share.bind(this)}>Share (once I deploy the site)</a>
+                    <a className="btn btn-primary" onClick={this.share.bind(this)}>Share to Facebook</a>
                     {progressButton}
                   </div>
                 </li>

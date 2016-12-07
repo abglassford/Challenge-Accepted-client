@@ -95,14 +95,14 @@ export default class Profile extends Component {
               <hr/>
               <ul>
                 {this.state.userData.map((challenge, i) => {
-                  if (challenge.progress !== 10) {
+                  if (challenge.progress !== 5) {
                     return (
                       <li key={i}>
                         <div>
                           <h2>{challenge.name}<span className="pull-right">{challenge.points} pts</span></h2>
                           <p>{challenge.description}</p>
                           <div className="progress">
-                            <div className="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style={{width: challenge.progress * 10 + '%'}}>
+                            <div className="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style={{width: challenge.progress * 20 + '%'}}>
                             </div>
                           </div>
                         </div>
@@ -125,7 +125,7 @@ export default class Profile extends Component {
                 </thead>
                 <tbody>
                 {this.state.userData.map((challenge, i) => {
-                  if (challenge.progress === 10) {
+                  if (challenge.progress === 5) {
                     return (
                       <tr key={i}>
                         <td>
