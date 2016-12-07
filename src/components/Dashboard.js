@@ -62,7 +62,7 @@ export default class Dashboard extends Component {
     FB.ui(
      {
       method: 'share',
-      href: 'https://challenge-accepted.surge.sh/'
+      href: `http://localhost:3000/profile/${this.state.fb_id}`
     }, function(response) {
       console.log('this is the response', response);
     });
@@ -105,7 +105,7 @@ export default class Dashboard extends Component {
                 step = <p>All Steps Completed!</p>
                  progressButton = <a className="btn btn-success" onClick={(event) => this.completeChallenge(challenge)}>Complete Challenge!</a>
               } else {
-                step = <p>Step {challenge.progress}: {steps[i][challenge.progress]}</p>
+                step = <p>Step {challenge.progress + 1}: {steps[i][challenge.progress + 1]}</p>
                 progressButton = <a className="btn btn-success" onClick={(event) => this.completeStep(challenge)}>Complete Step {challenge.progress + 1}</a>
               }
               return (
