@@ -10,7 +10,8 @@ export default class Challenge extends Component {
     this.state = {
       name: '',
       points: '',
-      description: ''
+      description: '',
+      creator: localStorage.name
     }
   }
 
@@ -19,13 +20,15 @@ export default class Challenge extends Component {
     let formObj = {
       name: this.refs.name.value,
       points: this.refs.points.value,
-      description: this.refs.description.value
+      description: this.refs.description.value,
+      creator: this.state.creator
     }
     axios.post('http://localhost:8000/challenge_templates', formObj)
     .then(res => browserHistory.push('/dashboard'))
   }
 
   render () {
+    console.log(this.state.creator);
     return (
       <div className="row">
         <NavBar />

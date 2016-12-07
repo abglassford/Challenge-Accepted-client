@@ -78,6 +78,7 @@ export default class Dashboard extends Component {
                   <h2>{chal_temp.name}</h2>
                   <p>{chal_temp.description}</p>
                   <p>Points: {chal_temp.points}</p>
+                  <p>Created By: {chal_temp.creator}</p>
                 </div>
                 <a className="btn btn-success" onClick={(event) => this.accept(chal_temp)}>Accept Challenge!</a>
               </li>

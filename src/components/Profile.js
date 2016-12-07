@@ -9,7 +9,8 @@ export default class Profile extends Component {
     this.state = {
       userData: [],
       userName: '',
-      user: localStorage.fb_id
+      user: localStorage.fb_id,
+      searchedId: ''
     }
     this.getProfile = this.getProfile.bind(this)
   }
@@ -21,7 +22,7 @@ export default class Profile extends Component {
       let name = res.data.data[0].first_name.charAt(0).toUpperCase() + res.data.data[0].first_name.slice(1)
       this.setState({
         userData: res.data.data,
-        userName: `${name}`,
+        userName: `${name}`
       })
     })
   }
@@ -36,7 +37,8 @@ export default class Profile extends Component {
         let userName = res.data.data[0].first_name.charAt(0).toUpperCase() + res.data.data[0].first_name.slice(1)
         this.setState({
           userData: res.data.data,
-          userName: `${userName}`
+          userName: `${userName}`,
+          searchedId: res.data.data[0].fb_id
         })
       })
       .catch(err => {
@@ -53,13 +55,23 @@ export default class Profile extends Component {
   }
 
   render() {
+    let banner
+    if(this.state.searchedId) {
+      if (this.state.searchedId === this.state.user) {
+        banner = <h1>Welcome {this.state.userName}!</h1>
+      } else {
+        banner = <h1>{this.state.userName}'s Profile</h1>
+      }
+    } else {
+       banner = <h1>Welcome {this.state.userName}!</h1>
+    }
     return (
       <div className="row">
         <NavBar/>
         <div className="container">
           <div className="row">
             <div className="user text-center">
-              <h1>Welcome, {this.state.userName}!</h1>
+              {banner}
             </div>
           </div>
           <div className="row">
