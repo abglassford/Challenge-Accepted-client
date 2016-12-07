@@ -1,6 +1,5 @@
 {
   "name": "Challenge-Accepted-client",
-  "homepage": "http://challenge-accepted.sh/",
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
@@ -17,7 +16,6 @@
     "react-router": "^3.0.0"
   },
   "scripts": {
-    "deploy": "npm build && surge -p build --domain challenge-accepted.surge.sh",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",

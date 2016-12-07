@@ -25,7 +25,7 @@ export default class Home extends Component {
       status = (
         <div>
           <Link className="btn btn-warning dash" to="/dashboard">Dashboard</Link>
-          <Link className="btn btn-danger logout" onClick={this.logout.bind(this)} to="/home">Logout</Link>
+          <Link className="btn btn-danger logout" onClick={this.logout.bind(this)} href="/home">Logout</Link>
         </div>
       )
     } else {
