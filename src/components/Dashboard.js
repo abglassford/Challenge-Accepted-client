@@ -62,7 +62,7 @@ export default class Dashboard extends Component {
     FB.ui(
      {
       method: 'share',
-      href: `http://localhost:3000/profile/${this.state.fb_id}`
+      href: 'https://www.google.com'
     }, function(response) {
       console.log('this is the response', response);
     });
