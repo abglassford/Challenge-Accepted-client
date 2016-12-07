@@ -62,7 +62,7 @@ export default class Dashboard extends Component {
     FB.ui(
      {
       method: 'share',
-      href: 'https://www.google.com'
+      href: `https://challenge-accepted-45f7c.firebaseapp.com/profile/${this.state.fb_id}`
     }, function(response) {
       console.log('this is the response', response);
     });
