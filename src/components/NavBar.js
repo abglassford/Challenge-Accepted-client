@@ -35,7 +35,7 @@ export default class NavBar extends Component {
           </Link>
           <Link className="navbar-brand" to={this.state.myProfile}>
             <p>Profile</p>
-          </Link>          
+          </Link>
           <Link className="navbar-brand" to="/challenge">
             <p>Challenge</p>
           </Link>
