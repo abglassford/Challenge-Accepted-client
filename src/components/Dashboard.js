@@ -100,12 +100,12 @@ export default class Dashboard extends Component {
               return a.id - b.id
             })
               .map((challenge, i) => {
-                steps.push(challenge.step1, challenge.step2, challenge.step3, challenge.step4, challenge.step4)
+                steps.push([challenge.step1, challenge.step2, challenge.step3, challenge.step4, challenge.step4])
               if (challenge.progress === 5) {
                 step = <p>All Steps Completed!</p>
                  progressButton = <a className="btn btn-success" onClick={(event) => this.completeChallenge(challenge)}>Complete Challenge!</a>
               } else {
-                step = <p>Step {challenge.progress}: {steps[challenge.progress]}</p>
+                step = <p>Step {challenge.progress}: {steps[i][challenge.progress]}</p>
                 progressButton = <a className="btn btn-success" onClick={(event) => this.completeStep(challenge)}>Complete Step {challenge.progress + 1}</a>
               }
               return (
@@ -128,7 +128,6 @@ export default class Dashboard extends Component {
             })}
           </ul>
         </div>
-        {/* <Footer /> */}
       </div>
     )
   }

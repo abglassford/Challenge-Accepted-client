@@ -38,6 +38,7 @@ export default class Home extends Component {
 
     }
     return (
+      <div className="main">
       <div className="jumbotron banner">
         <div className="banner-content">
           <h4>Accept the Challenge...</h4>
@@ -46,6 +47,7 @@ export default class Home extends Component {
             {status}
           </div>
         </div>
+      </div>
       </div>
     )
   }

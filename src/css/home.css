@@ -1,9 +1,14 @@
 .banner{
+  background-image: url('../images/main-splash.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
   display: flex;
   height: 400px;
   margin-top: 10%;
 }
 .banner-content {
+  color: white;
   justify-content: center;
   height: auto;
   width: 70%;
