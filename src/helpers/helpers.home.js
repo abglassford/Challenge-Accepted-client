@@ -22,7 +22,7 @@ function checkUserExists (response) {
         fb_id: response.id,
         first_name: response.first_name,
         last_name: response.last_name,
-        email: response.email,
+        email: response.email
       })
       .then(data => {
         setToken(response)

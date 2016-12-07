@@ -57,7 +57,7 @@ export default class Dashboard extends Component {
     FB.ui(
      {
       method: 'share',
-      href: 'http://developers.facebook.com/docs/'
+      href: 'https://www.google.com'
     }, function(response) {
       console.log('this is the response', response);
     });

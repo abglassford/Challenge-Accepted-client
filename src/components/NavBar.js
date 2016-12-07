@@ -30,13 +30,12 @@ export default class NavBar extends Component {
           </Link>
         </div>
         <div className="navbar-header pull-right">
-
-          <Link className="navbar-brand" to={this.state.myProfile}>
-            <p>Profile</p>
-          </Link>
           <Link className="navbar-brand" to="/dashboard">
             <p>Dashboard</p>
           </Link>
+          <Link className="navbar-brand" to={this.state.myProfile}>
+            <p>Profile</p>
+          </Link>          
           <Link className="navbar-brand" to="/challenge">
             <p>Challenge</p>
           </Link>

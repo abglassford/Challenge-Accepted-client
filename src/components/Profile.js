@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import NavBar from './NavBar';
 import axios from 'axios';
-import '../css/dashboard.css';
+import '../css/profile.css';
 
 export default class Profile extends Component {
   constructor (props) {
     super(props)
     this.state = {
       userData: [],
+      userName: '',
       user: localStorage.fb_id
     }
     this.getProfile = this.getProfile.bind(this)
@@ -17,37 +18,61 @@ export default class Profile extends Component {
     let user = this.state.user;
     axios.get(`http://localhost:8000/challenges/allUserData/${user}`)
     .then(res => {
-      this.setState({userData: res.data.data})
-      console.log(this.state.userData);
+      let name = res.data.data[0].first_name.charAt(0).toUpperCase() + res.data.data[0].first_name.slice(1)
+      this.setState({
+        userData: res.data.data,
+        userName: `${name}`,
+      })
     })
   }
 
   getProfile () {
-    let name = this.refs.search.value;
+    let name = this.refs.search.value.toLowerCase();
     axios.get(`http://localhost:8000/profile/${name}`)
     .then((data) => {
       let userId = data.data.data[0].fb_id
       axios.get(`http://localhost:8000/challenges/allUserData/${userId}`)
       .then(res => {
-        this.setState({userData: res.data.data})
-        console.log(this.state.userData);
+        let userName = res.data.data[0].first_name.charAt(0).toUpperCase() + res.data.data[0].first_name.slice(1)
+        this.setState({
+          userData: res.data.data,
+          userName: `${userName}`
+        })
       })
+      .catch(err => {
+        console.log(err);
+      })
+    })
+    .catch(err => {
+      document.getElementById("notfound").className = 'alert alert-danger col-md-12 text-center visible'
+      setTimeout(() => {
+        document.getElementById("notfound").className = 'alert alert-danger col-md-12 text-center hidden'
+      }, 2000)
     })
     document.getElementById("search").value = "";
   }
 
   render() {
     return (
-      <div>
+      <div className="row">
         <NavBar/>
         <div className="container">
           <div className="row">
-            <div className="col-md-6 col-md-offset-3">
+            <div className="user text-center">
+              <h1>Welcome, {this.state.userName}!</h1>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-4 col-md-offset-4">
               <div className="input-group">
                 <input ref="search" id="search"  type="text" className="form-control" placeholder="Search User by Name"/>
                 <span className="input-group-btn">
                   <button className="btn btn-default" onClick={(event) => this.getProfile()} type="button">Go!</button>
                 </span>
+              </div>
+              <br/>
+              <div id="notfound" className="alert alert-danger col-md-12 text-center hidden">
+                <strong>User Not Found</strong>
               </div>
             </div>
           </div>
@@ -62,7 +87,7 @@ export default class Profile extends Component {
                     return (
                       <li key={i}>
                         <div>
-                          <h2>{challenge.name}</h2>
+                          <h2>{challenge.name}<span className="pull-right">{challenge.points} pts</span></h2>
                           <p>{challenge.description}</p>
                           <div className="progress">
                             <div className="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style={{width: challenge.progress * 10 + '%'}}>
@@ -80,14 +105,17 @@ export default class Profile extends Component {
               <h2>Completed Challenges</h2>
               <hr/>
               <table className='table'>
-                <tr>
-                  <th>Challenge Name</th>
-                  <th>Points</th>
-                </tr>
+                <thead>
+                  <tr>
+                    <th>Challenge Name</th>
+                    <th>Points</th>
+                  </tr>
+                </thead>
+                <tbody>
                 {this.state.userData.map((challenge, i) => {
                   if (challenge.progress === 10) {
                     return (
-                      <tr>
+                      <tr key={i}>
                         <td>
                           <h2>{challenge.name}</h2>
                           <p>{challenge.description}</p>
@@ -99,8 +127,8 @@ export default class Profile extends Component {
                     )
                   }
                   return null
-
                 })}
+                </tbody>
               </table>
             </div>
 
